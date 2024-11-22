@@ -4,6 +4,11 @@ import java.util.ArrayDeque;
 import java.util.List;
 import java.util.Queue;
 
+/**
+ * 근무자 이름과 현재까지의 순번에 대한 정보를 관리하고 있습니다.
+ * 메서드를 통해 다음 근무자를 받을 수 있습니다.
+ * 연속 2일근무로 인해 순번이 밀린 인원은 priorityPeople 에 추가되고 이후에 priorityPeople이 먼저 반환됩니다.
+ */
 public class WorkingTurn {
     private final List<Person> people;
     private final Queue<Person> priorityPeople;
@@ -14,6 +19,8 @@ public class WorkingTurn {
         this.people = persons;
         this.priorityPeople = new ArrayDeque<>();
     }
+
+    // public method
 
     public Person getNextPerson(String recentPersonName) {
         if (!priorityPeople.isEmpty()) {
@@ -29,12 +36,10 @@ public class WorkingTurn {
         return person;
     }
 
-    public boolean isAvailableWork(String personName) {
-        if (people.get(turn).getName().equals(personName)) {
+    // private method
 
-            return false;
-        }
-        return true;
+    private boolean isAvailableWork(String personName) {
+        return !people.get(turn).getName().equals(personName);
     }
 
     private void increaseTurn() {

@@ -34,7 +34,7 @@ public class OnCallScheduleController {
     }
 
     private ScheduleService createSchedulerService(WeekAndHolidaysWorkerNamesDto weekAndHolidaysWorkerNames) {
-        WorkScheduler workScheduler = WorkScheduler.of(weekAndHolidaysWorkerNames);
+        WorkScheduler workScheduler = WorkScheduler.from(weekAndHolidaysWorkerNames);
         return new ScheduleService(holidayRepository, workScheduler);
     }
 

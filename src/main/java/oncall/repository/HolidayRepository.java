@@ -6,6 +6,10 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import oncall.domain.Holiday;
 
+/**
+ * 휴일을 저장하는 DB 입니다.
+ * 해당 repository 를 사용하여 휴일을 추가하거나 탐색할 수 있습니다.
+ */
 public class HolidayRepository implements Repository<Holiday> {
     private final List<Holiday> holidays = new ArrayList<>();
 
