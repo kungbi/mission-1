@@ -10,6 +10,8 @@ public class WorkScheduler {
     private Person recentlyPerson = null;
 
     public WorkScheduler(WorkingTurn weekdaysTurn, WorkingTurn holidaysTurn) {
+        validate(weekdaysTurn, holidaysTurn);
+
         this.weekdaysTurn = weekdaysTurn;
         this.holidaysTurn = holidaysTurn;
     }
@@ -32,6 +34,15 @@ public class WorkScheduler {
 
         recentlyPerson = holidaysTurn.getNextPerson(recentlyPersonName);
         return recentlyPerson;
+    }
+
+    private void validate(WorkingTurn weekdaysTurn, WorkingTurn holidaysTurn) {
+        if (weekdaysTurn == null) {
+            throw new IllegalArgumentException("weekdaysTurn is null");
+        }
+        if (holidaysTurn == null) {
+            throw new IllegalArgumentException("holidaysTurn is null");
+        }
     }
 
     public static WorkScheduler of(WeekAndHolidaysWorkerNamesDto weekAndHolidaysWorkerNames) {

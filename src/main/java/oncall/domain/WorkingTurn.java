@@ -10,13 +10,7 @@ public class WorkingTurn {
     private int turn = 0;
 
     public WorkingTurn(List<Person> persons) {
-        if (persons.stream().distinct().count() != persons.size()) {
-            throw new IllegalArgumentException("persons must have the same number of people");
-        }
-        if (persons.size() < 2) {
-            throw new IllegalArgumentException("persons must have at least 2 persons");
-        }
-
+        validate(persons);
         this.people = persons;
         this.priorityPeople = new ArrayDeque<>();
     }
@@ -45,5 +39,14 @@ public class WorkingTurn {
 
     private void increaseTurn() {
         turn = (turn + 1) % people.size();
+    }
+
+    private void validate(List<Person> persons) {
+        if (persons.stream().distinct().count() != persons.size()) {
+            throw new IllegalArgumentException("persons must have the same number of people");
+        }
+        if (persons.size() < 2) {
+            throw new IllegalArgumentException("persons must have at least 2 persons");
+        }
     }
 }
