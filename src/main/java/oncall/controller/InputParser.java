@@ -18,12 +18,13 @@ public class InputParser {
     public static int parseInt(String input) {
         try {
             return Integer.parseInt(input);
-        } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(GlobalErrorMessage.INVALID_INPUT.getMessage());
+        } catch (NumberFormatException error) {
+            throw new IllegalArgumentException(GlobalErrorMessage.INVALID_INPUT.getMessage(), error);
         }
     }
 
     public static MonthAndDayOfWeekDto parseMonthAndDayOfWeek(String input) {
+        validateNullAndBlank(input);
         List<String> splitInput = Arrays.stream(input.split(SEPARATOR)).toList();
         if (splitInput.size() != MAX_NUMBER_OF_ARGUMENTS) {
             throw new IllegalArgumentException(GlobalErrorMessage.INVALID_INPUT.getMessage());
@@ -35,9 +36,16 @@ public class InputParser {
     }
 
     public static NamesDto parseNames(String input) {
+        validateNullAndBlank(input);
         List<String> splitInput = Arrays.stream(input.split(SEPARATOR)).toList();
 
         List<String> names = new ArrayList<>(splitInput);
         return new NamesDto(names);
+    }
+
+    private static void validateNullAndBlank(String input) {
+        if (input == null || input.isEmpty()) {
+            throw new IllegalArgumentException(GlobalErrorMessage.INVALID_INPUT.getMessage());
+        }
     }
 }
