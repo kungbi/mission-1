@@ -5,8 +5,10 @@ import java.util.function.Function;
 import java.util.function.Supplier;
 import oncall.dto.MonthAndDayOfWeekDto;
 import oncall.dto.NamesDto;
+import oncall.dto.WeekAndHolidaysWorkerNamesDto;
 import oncall.validator.InputValidator;
 import oncall.view.InputView;
+import oncall.view.OutputView;
 
 public class RetryInputUtil {
 
@@ -15,16 +17,27 @@ public class RetryInputUtil {
                 InputValidator::monthAndDayOfWeekValidate);
     }
 
-    public static NamesDto getWeekDaysWorkerNames() {
-        return retryLogics(InputView::getWeekDaysWorkerNames, InputParser::parseNames, InputValidator::namesValidate);
+    public static WeekAndHolidaysWorkerNamesDto getWeekAndHolidaysWorkerNames() {
+        while (true) {
+            try {
+                NamesDto weekDaysWorkerNames = InputParser.parseNames(InputView.getWeekDaysWorkerNames());
+                NamesDto holidaysWorkerNames = InputParser.parseNames(InputView.getHolidaysWorkerNames());
+
+                InputValidator.namesValidate(weekDaysWorkerNames);
+                InputValidator.namesValidate(holidaysWorkerNames);
+
+                return new WeekAndHolidaysWorkerNamesDto(
+                        weekDaysWorkerNames,
+                        holidaysWorkerNames
+                );
+            } catch (IllegalArgumentException error) {
+                OutputView.printError(error.getMessage());
+            }
+        }
     }
 
-    public static NamesDto getHolidaysWorkerNames() {
-        return retryLogics(InputView::getHolidaysWorkerNames, InputParser::parseNames, InputValidator::namesValidate);
-    }
-
-    public static <T> T retryLogics(Supplier<String> userInputReader, Function<String, T> parser,
-                                    Consumer<T> validator) {
+    private static <T> T retryLogics(Supplier<String> userInputReader, Function<String, T> parser,
+                                     Consumer<T> validator) {
         while (true) {
             try {
                 String userInput = userInputReader.get();
@@ -32,21 +45,8 @@ public class RetryInputUtil {
                 validator.accept(parsedInput);
                 return parsedInput;
             } catch (IllegalArgumentException error) {
-//                OutputView.printError(error.getMessage());
+                OutputView.printError(error.getMessage());
             }
-        }
-    }
-
-    public static String retryLogics(Supplier<String> userInputReader, Consumer<String> validator) {
-        while (true) {
-            try {
-                String userInput = userInputReader.get();
-                validator.accept(userInput);
-                return userInput;
-            } catch (IllegalArgumentException error) {
-//                OutputView.printError(error.getMessage());
-            }
-
         }
     }
 }
