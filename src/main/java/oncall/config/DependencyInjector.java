@@ -18,7 +18,8 @@ public class DependencyInjector {
     }
 
     private void holidaysInitialize(HolidayRepository holidayRepository) {
-        HolidayParser holidayParser = new HolidayParser(new CsvReader(this.createBufferedReader("holidays.md"), false));
+        HolidayParser holidayParser = new HolidayParser(
+                new CsvReader(this.createBufferedReader(Configuration.HOLIDAYS_FILE_NAME.getStringValue()), false));
         HolidayFileInitializer holidayFileInitializer = new HolidayFileInitializer(holidayRepository, holidayParser);
         holidayFileInitializer.init();
     }

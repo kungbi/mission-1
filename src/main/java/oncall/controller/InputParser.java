@@ -12,6 +12,7 @@ public class InputParser {
 
     public static final int MONTH_INDEX = 0;
     public static final int DAY_OF_WEEK_INDEX = 1;
+    public static final String SEPARATOR = ",";
 
     public static int parseInt(String input) {
         try {
@@ -22,7 +23,7 @@ public class InputParser {
     }
 
     public static MonthAndDayOfWeekDto parseMonthAndDayOfWeek(String input) {
-        List<String> splitInput = Arrays.stream(input.split(",")).toList();
+        List<String> splitInput = Arrays.stream(input.split(SEPARATOR)).toList();
         if (splitInput.size() != 2) {
             throw new IllegalArgumentException(GlobalErrorMessage.INVALID_INPUT.getMessage());
         }
@@ -33,7 +34,7 @@ public class InputParser {
     }
 
     public static NamesDto parseNames(String input) {
-        List<String> splitInput = Arrays.stream(input.split(",")).toList();
+        List<String> splitInput = Arrays.stream(input.split(SEPARATOR)).toList();
 
         List<String> names = new ArrayList<>(splitInput);
         return new NamesDto(names);
