@@ -6,17 +6,15 @@ import java.util.Objects;
 import oncall.controller.OnCallScheduleController;
 import oncall.repository.HolidayRepository;
 import oncall.service.HolidayFileInitializer;
-import oncall.service.ScheduleService;
 import oncall.utils.fileparser.CsvReader;
 import oncall.utils.fileparser.HolidayParser;
 
 public class DependencyInjector {
     public OnCallScheduleController createController() {
         HolidayRepository holidayRepository = new HolidayRepository();
-        ScheduleService scheduleService = new ScheduleService(holidayRepository);
         holidaysInitialize(holidayRepository);
 
-        return new OnCallScheduleController(holidayRepository, scheduleService);
+        return new OnCallScheduleController(holidayRepository);
     }
 
     private void holidaysInitialize(HolidayRepository holidayRepository) {
