@@ -1,5 +1,7 @@
 package oncall.enums;
 
+import oncall.exception.GlobalErrorMessage;
+
 public enum DayOfWeek {
     MONDAY("월"),
     TUESDAY("화"),
@@ -21,7 +23,7 @@ public enum DayOfWeek {
                 return day;
             }
         }
-        throw new IllegalArgumentException();
+        throw new IllegalArgumentException(GlobalErrorMessage.INVALID_INPUT.getMessage());
     }
 
     public String getKorean() {

@@ -6,6 +6,7 @@ import java.util.List;
 import oncall.dto.MonthAndDayOfWeekDto;
 import oncall.dto.NamesDto;
 import oncall.enums.DayOfWeek;
+import oncall.exception.GlobalErrorMessage;
 
 public class InputParser {
 
@@ -16,14 +17,14 @@ public class InputParser {
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException(e);
+            throw new IllegalArgumentException(GlobalErrorMessage.INVALID_INPUT.getMessage());
         }
     }
 
     public static MonthAndDayOfWeekDto parseMonthAndDayOfWeek(String input) {
         List<String> splitInput = Arrays.stream(input.split(",")).toList();
         if (splitInput.size() != 2) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(GlobalErrorMessage.INVALID_INPUT.getMessage());
         }
 
         int month = parseInt(splitInput.get(MONTH_INDEX));
