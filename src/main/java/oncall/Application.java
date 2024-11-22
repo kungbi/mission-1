@@ -1,5 +1,6 @@
 package oncall;
 
+import camp.nextstep.edu.missionutils.Console;
 import oncall.config.DependencyInjector;
 import oncall.controller.OnCallScheduleController;
 
@@ -8,6 +9,10 @@ public class Application {
         DependencyInjector injector = new DependencyInjector();
         OnCallScheduleController controller = injector.createController();
 
-        controller.run();
+        try {
+            controller.run();
+        } finally {
+            Console.close();
+        }
     }
 }
