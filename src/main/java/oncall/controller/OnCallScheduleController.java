@@ -5,7 +5,6 @@ import oncall.dto.MakeScheduleInputDto;
 import oncall.dto.MonthAndDayOfWeekDto;
 import oncall.dto.WeekAndHolidaysWorkerNamesDto;
 import oncall.dto.WorkScheduleDto;
-import oncall.enums.DayOfWeek;
 import oncall.enums.NumberOfDaysPerMonth;
 import oncall.repository.HolidayRepository;
 import oncall.service.ScheduleService;
@@ -22,13 +21,14 @@ public class OnCallScheduleController {
         MonthAndDayOfWeekDto monthAndDayOfWeek = RetryInputUtil.getMonthAndDayOfWeek();
         WeekAndHolidaysWorkerNamesDto weekAndHolidaysWorkerNames = RetryInputUtil.getWeekAndHolidaysWorkerNames();
 
-        int month = monthAndDayOfWeek.month();
-        DayOfWeek dayOfWeek = monthAndDayOfWeek.dayOfWeek();
-        int numberOfDaysPerMonth = getNumberOfDaysPerMonth(month);
-
         ScheduleService scheduleService = createSchedulerService(weekAndHolidaysWorkerNames);
         WorkScheduleDto workScheduleDto = scheduleService.makeSchedule(
-                new MakeScheduleInputDto(month, dayOfWeek, numberOfDaysPerMonth));
+                new MakeScheduleInputDto.Builder()
+                        .month(monthAndDayOfWeek.month())
+                        .dayOfWeek(monthAndDayOfWeek.dayOfWeek())
+                        .numberOfDaysPerMonth(getNumberOfDaysPerMonth(monthAndDayOfWeek.month()))
+                        .build()
+        );
 
         OutputView.printWorkSchedule(workScheduleDto);
     }
