@@ -1,11 +1,11 @@
 package oncall.domain;
 
-public class WorkingPlanner {
+public class WorkScheduler {
     private final WorkingTurn weekdaysTurn;
     private final WorkingTurn holidaysTurn;
     private Person recentlyPerson = null;
 
-    public WorkingPlanner(WorkingTurn weekdaysTurn, WorkingTurn weekendTurn) {
+    public WorkScheduler(WorkingTurn weekdaysTurn, WorkingTurn weekendTurn) {
         this.weekdaysTurn = weekdaysTurn;
         this.holidaysTurn = weekendTurn;
     }

@@ -15,6 +15,15 @@ public enum DayOfWeek {
         this.korean = korean;
     }
 
+    public static DayOfWeek findByKorean(String korean) {
+        for (DayOfWeek day : DayOfWeek.values()) {
+            if (day.getKorean().equals(korean)) {
+                return day;
+            }
+        }
+        throw new IllegalArgumentException();
+    }
+
     public String getKorean() {
         return korean;
     }

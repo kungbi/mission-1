@@ -12,7 +12,7 @@ class PlannerTest {
         List<Person> people = List.of(new Person("A"), new Person("B"), new Person("C"));
         WorkingTurn weekdaysTurn = new WorkingTurn(people);
         WorkingTurn holidaysTurn = new WorkingTurn(people);
-        WorkingPlanner planner = new WorkingPlanner(weekdaysTurn, holidaysTurn);
+        WorkScheduler planner = new WorkScheduler(weekdaysTurn, holidaysTurn);
 
         // 평일에 A가 근무하고 다음이 주말일 경우 A가 아닌 B, 그리고 또 다음날이 주말일 경우 A
         Assertions.assertEquals("A", planner.getWeekdaysTurnPerson().getName());
@@ -26,7 +26,7 @@ class PlannerTest {
         List<Person> people = List.of(new Person("A"), new Person("B"), new Person("C"));
         WorkingTurn weekdaysTurn = new WorkingTurn(people);
         WorkingTurn holidaysTurn = new WorkingTurn(people);
-        WorkingPlanner planner = new WorkingPlanner(weekdaysTurn, holidaysTurn);
+        WorkScheduler planner = new WorkScheduler(weekdaysTurn, holidaysTurn);
 
         // 평일 - 휴일 - 평일 - 휴일
         System.out.println(planner.getWeekdaysTurnPerson().getName());
