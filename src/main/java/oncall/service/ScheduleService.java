@@ -23,20 +23,28 @@ public class ScheduleService {
         List<WorkDto> works = new ArrayList<>();
         DayOfWeek currentDayOfWeek = input.dayOfWeek();
         for (int day = 1; day <= input.numberOfDaysPerMonth(); day++) {
-            boolean isHoliday = holidayRepository.findByDate(input.month(), day).isPresent();
-            if (DayOfWeek.isWeekend(currentDayOfWeek) || isHoliday) {
-                Person holydaysTurnPerson = this.workScheduler.getHolydaysTurnPerson();
-                works.add(new WorkDto(input.month(), day, isHoliday, currentDayOfWeek,
-                        holydaysTurnPerson.getName()));
-                currentDayOfWeek = DayOfWeek.nextDayOfWeek(currentDayOfWeek);
-                continue;
-            }
-            Person weekdaysTurnPerson = this.workScheduler.getWeekdaysTurnPerson();
-            works.add(
-                    new WorkDto(input.month(), day, false, currentDayOfWeek,
-                            weekdaysTurnPerson.getName()));
+            works.add(makeSingleSchedule(input, day, currentDayOfWeek));
             currentDayOfWeek = DayOfWeek.nextDayOfWeek(currentDayOfWeek);
         }
         return new WorkScheduleDto(works);
+    }
+
+    private WorkDto makeSingleSchedule(MakeScheduleInputDto input, int day, DayOfWeek currentDayOfWeek) {
+        boolean isHoliday = holidayRepository.findByDate(input.month(), day).isPresent();
+        if (DayOfWeek.isWeekend(currentDayOfWeek) || isHoliday) {
+            return makeHolidayWork(input, day, currentDayOfWeek, isHoliday);
+        }
+        return makeWeekdayWork(input, day, currentDayOfWeek);
+    }
+
+    private WorkDto makeWeekdayWork(MakeScheduleInputDto input, int day, DayOfWeek currentDayOfWeek) {
+        Person weekdaysTurnPerson = this.workScheduler.getWeekdaysTurnPerson();
+        return new WorkDto(input.month(), day, false, currentDayOfWeek, weekdaysTurnPerson.getName());
+    }
+
+    private WorkDto makeHolidayWork(MakeScheduleInputDto input, int day, DayOfWeek currentDayOfWeek,
+                                    boolean isHoliday) {
+        Person holydaysTurnPerson = this.workScheduler.getHolydaysTurnPerson();
+        return new WorkDto(input.month(), day, isHoliday, currentDayOfWeek, holydaysTurnPerson.getName());
     }
 }
