@@ -13,6 +13,7 @@ public class InputParser {
     public static final int MONTH_INDEX = 0;
     public static final int DAY_OF_WEEK_INDEX = 1;
     public static final String SEPARATOR = ",";
+    public static final int MAX_NUMBER_OF_ARGUMENTS = 2;
 
     public static int parseInt(String input) {
         try {
@@ -24,7 +25,7 @@ public class InputParser {
 
     public static MonthAndDayOfWeekDto parseMonthAndDayOfWeek(String input) {
         List<String> splitInput = Arrays.stream(input.split(SEPARATOR)).toList();
-        if (splitInput.size() != 2) {
+        if (splitInput.size() != MAX_NUMBER_OF_ARGUMENTS) {
             throw new IllegalArgumentException(GlobalErrorMessage.INVALID_INPUT.getMessage());
         }
 

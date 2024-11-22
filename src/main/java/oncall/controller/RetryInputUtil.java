@@ -6,6 +6,7 @@ import java.util.function.Supplier;
 import oncall.dto.MonthAndDayOfWeekDto;
 import oncall.dto.NamesDto;
 import oncall.dto.WeekAndHolidaysWorkerNamesDto;
+import oncall.exception.GlobalErrorMessage;
 import oncall.validator.InputValidator;
 import oncall.view.InputView;
 import oncall.view.OutputView;
@@ -31,7 +32,7 @@ public class RetryInputUtil {
                         holidaysWorkerNames
                 );
             } catch (IllegalArgumentException error) {
-                OutputView.printError(error.getMessage());
+                OutputView.printError(GlobalErrorMessage.INVALID_INPUT.getMessage());
             }
         }
     }
@@ -45,7 +46,7 @@ public class RetryInputUtil {
                 validator.accept(parsedInput);
                 return parsedInput;
             } catch (IllegalArgumentException error) {
-                OutputView.printError(error.getMessage());
+                OutputView.printError(GlobalErrorMessage.INVALID_INPUT.getMessage());
             }
         }
     }

@@ -26,13 +26,16 @@ public class OnCallScheduleController {
         DayOfWeek dayOfWeek = monthAndDayOfWeek.dayOfWeek();
         int numberOfDaysPerMonth = getNumberOfDaysPerMonth(month);
 
-        WorkScheduler workScheduler = WorkScheduler.of(weekAndHolidaysWorkerNames);
-
-        ScheduleService scheduleService = new ScheduleService(holidayRepository, workScheduler);
+        ScheduleService scheduleService = createSchedulerService(weekAndHolidaysWorkerNames);
         WorkScheduleDto workScheduleDto = scheduleService.makeSchedule(
                 new MakeScheduleInputDto(month, dayOfWeek, numberOfDaysPerMonth));
 
         OutputView.printWorkSchedule(workScheduleDto);
+    }
+
+    private ScheduleService createSchedulerService(WeekAndHolidaysWorkerNamesDto weekAndHolidaysWorkerNames) {
+        WorkScheduler workScheduler = WorkScheduler.of(weekAndHolidaysWorkerNames);
+        return new ScheduleService(holidayRepository, workScheduler);
     }
 
     private int getNumberOfDaysPerMonth(int month) {
