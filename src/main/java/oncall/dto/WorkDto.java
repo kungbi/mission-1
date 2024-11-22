@@ -1,6 +1,8 @@
 package oncall.dto;
 
 
-public record WorkDto(int month, int day, boolean holiday, String dayOfWeek, String workerName) {
+import oncall.enums.DayOfWeek;
+
+public record WorkDto(int month, int day, boolean holiday, DayOfWeek dayOfWeek, String workerName) {
 
 }
