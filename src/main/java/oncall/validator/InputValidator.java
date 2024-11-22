@@ -1,6 +1,5 @@
 package oncall.validator;
 
-import java.util.List;
 import oncall.dto.MonthAndDayOfWeekDto;
 import oncall.dto.NamesDto;
 import oncall.exception.GlobalErrorMessage;
@@ -20,16 +19,18 @@ public class InputValidator {
     }
 
     public static void namesValidate(NamesDto namesDto) {
-        List<String> names = namesDto.names();
-        if (names == null) {
+        if (namesDto == null) {
+            throw new IllegalArgumentException(GlobalErrorMessage.INVALID_INPUT.getMessage());
+        }
+        if (namesDto.names() == null || namesDto.names().isEmpty()) {
             throw new IllegalArgumentException(GlobalErrorMessage.INVALID_INPUT.getMessage());
         }
 
-        if (names.stream().distinct().count() != names.size()) {
+        if (namesDto.names().stream().distinct().count() != namesDto.names().size()) {
             throw new IllegalArgumentException(GlobalErrorMessage.INVALID_INPUT.getMessage());
         }
 
-        if (names.stream().anyMatch(String::isEmpty)) {
+        if (namesDto.names().stream().anyMatch(String::isEmpty)) {
             throw new IllegalArgumentException(GlobalErrorMessage.INVALID_INPUT.getMessage());
         }
     }
