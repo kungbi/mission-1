@@ -12,10 +12,9 @@ public class OutputView {
                 holiday = "(휴일)";
             }
 
-            System.out.printf("%d %d %s%s %s", work.month(), work.day(), work.dayOfWeek().getKorean(), holiday,
+            System.out.printf("%d월 %d일 %s%s %s\n", work.month(), work.day(), work.dayOfWeek().getKorean(), holiday,
                     work.workerName());
         }
-
     }
 
     public static void printError(String message) {
