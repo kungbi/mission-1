@@ -10,6 +10,9 @@ public class InputValidator {
         if (monthAndDayOfWeek == null) {
             throw new IllegalArgumentException(GlobalErrorMessage.INVALID_INPUT.getMessage());
         }
+        if (monthAndDayOfWeek.dayOfWeek() == null) {
+            throw new IllegalArgumentException(GlobalErrorMessage.INVALID_INPUT.getMessage());
+        }
 
         if (!(1 <= monthAndDayOfWeek.month() && monthAndDayOfWeek.month() <= 12)) {
             throw new IllegalArgumentException(GlobalErrorMessage.INVALID_INPUT.getMessage());

@@ -5,9 +5,9 @@ public class WorkScheduler {
     private final WorkingTurn holidaysTurn;
     private Person recentlyPerson = null;
 
-    public WorkScheduler(WorkingTurn weekdaysTurn, WorkingTurn weekendTurn) {
+    public WorkScheduler(WorkingTurn weekdaysTurn, WorkingTurn holidaysTurn) {
         this.weekdaysTurn = weekdaysTurn;
-        this.holidaysTurn = weekendTurn;
+        this.holidaysTurn = holidaysTurn;
     }
 
     public Person getWeekdaysTurnPerson() {

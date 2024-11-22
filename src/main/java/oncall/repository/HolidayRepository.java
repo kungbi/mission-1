@@ -15,7 +15,7 @@ public class HolidayRepository implements Repository<Holiday> {
                 return Optional.of(holiday);
             }
         }
-        return null;
+        return Optional.empty();
     }
 
     @Override
